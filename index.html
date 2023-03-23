@@ -57,7 +57,7 @@
             csvData.push([]);
         }
 
-    console.log(todayDate)
+    //console.log(todayDate)
     
         Papa.parse('Bonnetid_Oslo_2023-03.csv', {
             download: true, 
@@ -113,7 +113,6 @@
 
                 for (let j=0; j<csvData[0].length; j++) {
                     if (csvData[0][j] == todayDate) {
-                        console.log("right date")
                         fajrEl.innerHTML = "Fajr: " + csvData[1][j];
                         sunriseEl.innerHTML = "Sunrise: " + csvData[2][j]
                         dhuhrEl.innerHTML = "Dhuhr: " + csvData[3][j];
