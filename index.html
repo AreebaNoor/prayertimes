@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+    <title>Prayer Times</title>
+
+    <style>
+        @font-face {
+            font-family: ATypewriterForMe;
+            src: url(./Media/ATypewriterForMe.ttf);
+        }
+        .flexDiv {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        p {
+            background-color: rgb(208, 199, 200);
+            font-family: ATypewriterForMe;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 7px 10px;
+            width: 150px;
+            text-align: left;
+            margin: 0; 
+        }
+    </style>
+</head>
+<body>
+    <div class="flexDiv">
+        <p id="fajrP"></p>
+        <p id="sunriseP"></p>
+        <p id="dhuhrP"></p>
+        <p id="asrP"></p>
+        <p id="maghribP"></p>
+        <p id="ishaP"></p>
+    </div>
+
+    <script type="module">
+        let fajrEl = document.getElementById("fajrP");
+        let sunriseEl = document.getElementById("sunriseP");
+        let dhuhrEl = document.getElementById("dhuhrP");
+        let asrEl = document.getElementById("asrP")
+        let maghribEl = document.getElementById("maghribP");
+        let ishaEl = document.getElementById("ishaP");
+
+        // Create today's date
+        let todayDate = new Date();
+        let dd = String(todayDate.getDate()).padStart(2, '0');
+        let mm = String(todayDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = todayDate.getFullYear();
+        todayDate = dd + "-" + mm + "-" + yyyy;
+
+        const csvData = new Array;
+        for (let p=0; p<7; p++) {
+            csvData.push([]);
+        }
+
+    console.log(todayDate)
+    
+        Papa.parse('Bonnetid_Oslo_2023-03.csv', {
+            download: true, 
+            header: true,
+            complete: function (loaddata1) {
+                for (let a=0; a<loaddata1.data.length; a++) {
+                    csvData[0].push(loaddata1.data[a].Dato);
+                    csvData[1].push(loaddata1.data[a].Fajr);
+                    csvData[2].push(loaddata1.data[a].Fajrslutt);
+                    csvData[3].push(loaddata1.data[a].Duhr);
+                    csvData[4].push(loaddata1.data[a].Asr);
+                    csvData[5].push(loaddata1.data[a].Maghrib);
+                    csvData[6].push(loaddata1.data[a].Isha);
+                }
+
+            /*
+                for (let i=0; i<csvData[0].length; i++) {
+                    if (csvData[0][i] == todayDate) {
+                        fajrEl.innerHTML = csvData[1][i];
+                        sunriseEl.innerHTML = csvData[2][i]
+                        dhuhrEl.innerHTML = csvData[3][i];
+                        asrEl.innerHTML = csvData[4][i];
+                        maghribEl.innerHTML = csvData[5][i];
+                        ishaEl.innerHTML = csvData[6][i];
+                    }
+                    else {
+                        fajrEl.innerHTML = "--";
+                        sunriseEl.innerHTML = "--";
+                        dhuhrEl.innerHTML = "--";
+                        asrEl.innerHTML = "--";
+                        maghribEl.innerHTML = "--";
+                        ishaEl.innerHTML = "--";
+
+                    }
+                }
+            */
+            }
+        });
+        
+        Papa.parse('Bonnetid_Oslo_2023-04.csv', {
+            download: true, 
+            header: true,
+            complete: function (loaddata2) {
+                for (let b=0; b<loaddata2.data.length; b++) {
+                    csvData[0].push(loaddata2.data[b].Dato);
+                    csvData[1].push(loaddata2.data[b].Fajr);
+                    csvData[2].push(loaddata2.data[b].Fajrslutt);
+                    csvData[3].push(loaddata2.data[b].Duhr);
+                    csvData[4].push(loaddata2.data[b].Asr);
+                    csvData[5].push(loaddata2.data[b].Maghrib);
+                    csvData[6].push(loaddata2.data[b].Isha);
+                }
+
+                for (let j=0; j<csvData[0].length; j++) {
+                    if (csvData[0][j] == todayDate) {
+                        console.log("right date")
+                        fajrEl.innerHTML = "Fajr: " + csvData[1][j];
+                        sunriseEl.innerHTML = "Sunrise: " + csvData[2][j]
+                        dhuhrEl.innerHTML = "Dhuhr: " + csvData[3][j];
+                        asrEl.innerHTML = "Asr: " + csvData[4][j];
+                        maghribEl.innerHTML = "Maghrib: " + csvData[5][j];
+                        ishaEl.innerHTML = "Isha: " + csvData[6][j];
+                    }
+                }
+            }
+        });
+        
+
+    </script>
+    
+</body>
+</html>
